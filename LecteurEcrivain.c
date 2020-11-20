@@ -2,7 +2,6 @@
 // Created by cloum on 18/11/2020.
 //
 #include <pthread.h>
-#include <sys/types.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -111,21 +110,18 @@ int main(int argc, char *argv[]){
 
     for(int i = 0; i < nEcr; i++){
         err = pthread_create(&ecrivains[i],NULL,ecrivain,emptyArgs);
-        checkerr(err);
-    }
+        checkerr(err);}
     for(int i = 0; i < nLect; i++){
         err = pthread_create(&lecteurs[i],NULL,lecteur,emptyArgs);
-        checkerr(err);
-    }
+        checkerr(err);}
+
 
     for(int i = 0; i < nEcr; i++){
         err = pthread_join(ecrivains[i],NULL);
-        checkerr(err);
-    }
+        checkerr(err);}
     for(int i = 0; i < nLect; i++){
         err = pthread_join(lecteurs[i],NULL);
-        checkerr(err);
-    }
+        checkerr(err);}
 
     printf("Travail terminé,\n passages Ecriture : %i\n passages Lecture : %i\n",compteEcritures,compteLectures);
 }
