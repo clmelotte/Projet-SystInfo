@@ -33,9 +33,9 @@ void *gaucher(void *numbers){
         pthread_mutex_unlock(&mutexBa[(number + 1) % n_of_philo]);
         itt++;
     }
-    pthread_mutex_lock(&mutexTotal);
+    pthread_mutex_lock(mutexTotal);
     totalEat++;
-    pthread_mutex_unlock(&mutexTotal);
+    pthread_mutex_unlock(mutexTotal);
     printf("philosophe %d a fini !\n",number+1);
 }
 
@@ -54,9 +54,9 @@ void *droitier(void *numbers){
         pthread_mutex_unlock(&mutexBa[number]);
         itt++;
     }
-    pthread_mutex_lock(&mutexTotal);
+    pthread_mutex_lock(mutexTotal);
     totalEat++;
-    pthread_mutex_unlock(&mutexTotal);
+    pthread_mutex_unlock(mutexTotal);
     printf("philosophe %d a fini !\n",number+1);
 
 }
