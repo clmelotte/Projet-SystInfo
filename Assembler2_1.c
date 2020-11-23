@@ -6,10 +6,6 @@
 #include <stdlib.h>
 #include <pthread.h>
 
-int omega;
-int *mut;
-int *count;
-
 
 long lock(int* mutexAdress){
     int *adress= mutexAdress;
@@ -45,7 +41,8 @@ long unlock(int* mutexAdress){
 }
 
 
-void *SomTest(){
+void *SomTest(void* count, void* mut){
+    int* count
     printf("entre SomTest\n");
     for(int i =0; i<100;i++ ){
         while(lock(mut)==1){}
@@ -60,18 +57,20 @@ int main(int argc,char *argv[]){
     int n_of_th = atoi(argv[1]);
     pthread_t threadsPhi[n_of_th];
     printf("print number 2\n");
-    printf("print number of thread %d", n_of_th);
-    omega = 1;
-    int *mut= &omega;
+    printf("print number of thread %d\n", n_of_th);
+
+    int *count=0;
+    int *mut= 0;
 
     for (int i=0; i<n_of_th; i++){
         pthread_create(&threadsPhi[i],NULL,SomTest,NULL);
     }
-    printf("2");
+    printf("point de control 2\n");
 
     for(int i=0;i<n_of_th;i++) {
         pthread_join(threadsPhi[i], NULL);
     }
+    printf("result \n");
     printf("result= %d", *count);
 
     return 0;

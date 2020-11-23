@@ -48,7 +48,6 @@ void *droitier(void *numbers){
         itt++;
     }
     return NULL;
-
 }
 
 
@@ -57,7 +56,8 @@ int main(int argc,char *argv[]){
     n_of_philo=atoi(argv[1]);
     n_of_philoM=n_of_philo;
     if(n_of_philo==1){n_of_philoM=2;}
-    mutexBa= (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t)*n_of_philoM);
+    pthread_mutex_t nome[n_of_philoM];
+    mutexBa= nome;
     pthread_t threadsPhi[n_of_philo];
 
     for(int i=0;i<n_of_philoM;i++){
@@ -75,6 +75,6 @@ int main(int argc,char *argv[]){
     for(int i=0;i<n_of_philo;i++) {
         pthread_join(threadsPhi[i], NULL);
     }
-    free(mutexBa);
+    printf("réussi");
     return 0;
 }
