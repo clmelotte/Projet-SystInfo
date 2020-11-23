@@ -42,7 +42,7 @@ long unlock(int* mutexAdress){
 
 
 void *SomTest(void* count, void* mut){
-    int* count
+    int* count;
     printf("entre SomTest\n");
     for(int i =0; i<100;i++ ){
         while(lock(mut)==1){}
