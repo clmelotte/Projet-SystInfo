@@ -1,0 +1,20 @@
+#!/bin/bash
+> timesProdCons.csv
+for n in {1..8}
+do
+	for i in {1..5}
+	do
+		/usr/bin/time -a -o "timesProdCons.csv" -f '%e,' ./prodCons $n $n
+		truncate -s-1 timesProdCons.csv
+	done
+	truncate -s-1 timesProdCons.csv
+	echo "" >> timesProdCons.csv
+	for i in {1..5}
+        do
+		let n2=n+1
+		/usr/bin/time -a -o "timesProdCons.csv" -f '%e,' ./prodCons $n $n2
+                truncate -s-1 timesProdCons.csv
+        done
+	truncate -s-1 timesProdCons.csv
+        echo "" >> timesProdCons.csv
+done

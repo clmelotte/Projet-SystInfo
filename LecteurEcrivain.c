@@ -88,6 +88,7 @@ int main(int argc, char *argv[]){
     nEcr = atoi((char *)argv[1]);
     nLect = atoi((char *)argv[2]);
 
+
     if(nEcr ==0){
         printf("Warning: the input for the number of writers was either 0 or not a number \n");
     }
@@ -123,5 +124,5 @@ int main(int argc, char *argv[]){
         err = pthread_join(lecteurs[i],NULL);
         checkerr(err);}
 
-    printf("Travail terminé,\n passages Ecriture : %i\n passages Lecture : %i\n",compteEcritures,compteLectures);
+    //printf("Travail terminé,\n passages Ecriture : %i\n passages Lecture : %i\n",compteEcritures,compteLectures);
 }
