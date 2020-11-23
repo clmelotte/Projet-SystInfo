@@ -75,6 +75,6 @@ int main(int argc,char *argv[]){
     for(int i=0;i<n_of_philo;i++) {
         pthread_join(threadsPhi[i], NULL);
     }
-    printf("réussi");
+    printf("réussi 11");
     return 0;
 }
