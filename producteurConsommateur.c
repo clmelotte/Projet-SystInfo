@@ -70,6 +70,10 @@ void *consommateur(void *args){
     while (outDone<1024) {
         int nbr;
 
+        pthread_mutex_lock(&out);
+        outDone++;
+        pthread_mutex_unlock(&out);
+
         sem_wait(&full);
         pthread_mutex_lock(&buffer);
         nbr = get();
@@ -78,10 +82,6 @@ void *consommateur(void *args){
 
         //simulating computing;
         while (rand() > RAND_MAX / 10000) {}
-
-        pthread_mutex_lock(&out);
-        outDone++;
-        pthread_mutex_unlock(&out);
         //printf("consuming done, outDone: %i\n", outDone);
     }
 
@@ -136,13 +136,13 @@ int main(int argc, char *argv[]){
 
     for(int i = 0; i < nProd; i++){
         err=pthread_join(producteurs[i],NULL);
-        checkerr(err);
-        printf("producer nbr %i closed\n",i+1);}
+        checkerr(err);}
+        //printf("producer nbr %i closed\n",i+1);}
 
     for(int i = 0; i < nCons; i++){
         err=pthread_join(consommateurs[i],NULL);
-        //checkerr(err);
-        printf("consumer nbr %i closed\n",i+1);}
+        checkerr(err);}
+        //printf("consumer nbr %i closed\n",i+1);}
 
     free(buff);
     printf("Travail terminé,\n productions restantes : %i\n consommations faites : %i\n",inLeft,outDone);
