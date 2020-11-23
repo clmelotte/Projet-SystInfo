@@ -9,9 +9,7 @@
 
 int n_of_philo;
 int n_of_philoM;
-int totalEat;                  //Total of finished Threads
 
-pthread_mutex_t *mutexTotal;
 pthread_mutex_t *mutexBa;
 
 void penser(int number){
@@ -24,7 +22,7 @@ void penser(int number){
 void *gaucher(void *numbers){
     int itt=1;
     int number= *((int*) numbers);
-    while(itt<=1000) {
+    while(itt<=10000) {
         penser(number);
         pthread_mutex_lock(&mutexBa[number]);
         pthread_mutex_lock(&mutexBa[(number + 1) % n_of_philoM]);
@@ -32,9 +30,6 @@ void *gaucher(void *numbers){
         pthread_mutex_unlock(&mutexBa[(number + 1) % n_of_philoM]);
         itt++;
     }
-    pthread_mutex_lock(mutexTotal);
-    totalEat++;
-    pthread_mutex_unlock(mutexTotal);
     return NULL;
 }
 
@@ -52,9 +47,6 @@ void *droitier(void *numbers){
         pthread_mutex_unlock(&mutexBa[number]);
         itt++;
     }
-    pthread_mutex_lock(mutexTotal);
-    totalEat++;
-    pthread_mutex_unlock(mutexTotal);
     return NULL;
 
 }
@@ -62,8 +54,6 @@ void *droitier(void *numbers){
 
 
 int main(int argc,char *argv[]){
-
-
     n_of_philo=atoi(argv[1]);
     n_of_philoM=n_of_philo;
     if(n_of_philo==1){n_of_philoM=2;}
@@ -71,7 +61,6 @@ int main(int argc,char *argv[]){
     pthread_t threadsPhi[n_of_philo];
 
     for(int i=0;i<n_of_philoM;i++){
-        pthread_mutex_init(mutexTotal,NULL);
         pthread_mutex_init(&mutexBa[i],NULL);
     }
 
@@ -89,5 +78,3 @@ int main(int argc,char *argv[]){
     free(mutexBa);
     return 0;
 }
-
-
