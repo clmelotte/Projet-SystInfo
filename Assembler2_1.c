@@ -30,7 +30,7 @@ long lock(int* mutexAdress){
 long unlock(int* mutexAdress){
     int *adress= mutexAdress;
     int output=0;
-    printf("oui");
+    printf("entre unlock\n");
 /*
     asm("movl %0 , %%eax\n"
         "xchgl %%eax, %1\n"
@@ -46,7 +46,7 @@ long unlock(int* mutexAdress){
 
 
 void *SomTest(){
-    printf("entre SomTest\n")
+    printf("entre SomTest\n");
     for(int i =0; i<100;i++ ){
         while(lock(mut)==1){}
         *count++;
