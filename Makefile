@@ -9,11 +9,9 @@ clean :
 	rm -fv philo
 	rm -fv prodCons
 	rm -fv lectEcr
-testPhilo :
-	./philo 2
-testProdCons :
-	./prodCons 2 2
-testLesctEcr:
-	./lectEcr 2 2
-runTest:
-	@make -s testLesctEcr testProdCons -j3
+timeTests:
+	make compile
+	bash ./timeTestPhilo
+	bash ./timeTestProdCons
+	bash ./timeTestLectEcr
+	make clean
