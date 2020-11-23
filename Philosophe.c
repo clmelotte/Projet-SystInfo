@@ -25,7 +25,7 @@ void penser(int number){
 void *gaucher(void *numbers){
     int itt=1;
     int number= (int) numbers;
-    while(itt<=1000) {
+    while(itt<=10000) {
         penser(number);
         pthread_mutex_lock(&mutexBa[number]);
         pthread_mutex_lock(&mutexBa[(number + 1) % n_of_philoM]);
