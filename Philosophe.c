@@ -9,6 +9,7 @@
 
 int n_of_philo;
 int n_of_philoM;
+
 pthread_mutex_t *mutexBa;
 
 void penser(int number){
@@ -75,8 +76,5 @@ int main(int argc,char *argv[]){
         pthread_join(threadsPhi[i], NULL);
     }
     free(mutexBa);
-    printf("réussi");
     return 0;
 }
-
-
