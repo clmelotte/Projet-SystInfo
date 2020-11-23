@@ -4,11 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <time.h>
 
 
 
 int n_of_philo;
-int n_of_philoM;               // usefull if only eating alone
+int n_of_philoM;               // usefull if only
+int totalEat;                  //Total of finished Threads
 
 pthread_mutex_t *mutexTotal;
 pthread_mutex_t *mutexBa;
@@ -23,7 +25,7 @@ void penser(int number){
 void *gaucher(void *numbers){
     int itt=1;
     int number= (int) numbers;
-    while(itt<=10000) {
+    while(itt<=1000) {
         penser(number);
         pthread_mutex_lock(&mutexBa[number]);
         pthread_mutex_lock(&mutexBa[(number + 1) % n_of_philoM]);
@@ -31,6 +33,9 @@ void *gaucher(void *numbers){
         pthread_mutex_unlock(&mutexBa[(number + 1) % n_of_philoM]);
         itt++;
     }
+    pthread_mutex_lock(mutexTotal);
+    totalEat++;
+    pthread_mutex_unlock(mutexTotal);
 }
 
 /*
@@ -47,12 +52,17 @@ void *droitier(void *numbers){
         pthread_mutex_unlock(&mutexBa[number]);
         itt++;
     }
+    pthread_mutex_lock(mutexTotal);
+    totalEat++;
+    pthread_mutex_unlock(mutexTotal);
 
 }
 
 
 
 int main(int argc,char *argv[]){
+
+    time_t timed = time(NULL);
 
     n_of_philo=atoi(argv[1]);
     n_of_philoM=n_of_philo;
@@ -77,6 +87,8 @@ int main(int argc,char *argv[]){
         pthread_join(threadsPhi[i], NULL);
     }
     free(mutexBa);
+    printf("total est égal %d\n",totalEat);
+    printf("temps = %ld",(time(NULL)-timed) );
     return 0;
 }
 

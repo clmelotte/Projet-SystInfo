@@ -14,7 +14,7 @@ int *count;
 long lock(int* mutexAdress){
     int *adress= mutexAdress;
     int output=0;
-    printf("non");
+    printf("entre Lock\n");
 /*
     asm ("movl %0 , %%eax\n"
          "xchgl %%eax, %1\n"
@@ -46,7 +46,8 @@ long unlock(int* mutexAdress){
 
 
 void *SomTest(){
-    for(int i =0; i<1000;i++ ){
+    printf("entre SomTest\n")
+    for(int i =0; i<100;i++ ){
         while(lock(mut)==1){}
         *count++;
         unlock(mut);
@@ -55,13 +56,13 @@ void *SomTest(){
 }
 
 int main(int argc,char *argv[]){
-    printf("mais print! putain!\n");
-
-    omega = 1;
+    printf("print number 1\n");
     int n_of_th = atoi(argv[1]);
     pthread_t threadsPhi[n_of_th];
-    printf("1\n");
-    printf("%d", n_of_th);
+    printf("print number 2\n");
+    printf("print number of thread %d", n_of_th);
+    omega = 1;
+    int *mut= &omega;
 
     for (int i=0; i<n_of_th; i++){
         pthread_create(&threadsPhi[i],NULL,SomTest,NULL);
