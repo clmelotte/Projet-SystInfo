@@ -49,8 +49,14 @@ void *producteur(void *args){
     while (inLeft>0) {
         //printf("producing started, left: %i\n", inLeft);
         pthread_mutex_lock(&in);
+        //probably harms efficiency a bit, but assure no deadlock will occur
+        if(inLeft<1){
+            pthread_mutex_unlock(&in);
+            break;}
         inLeft--;
         pthread_mutex_unlock(&in);
+
+
 
         //producing a random number ans simulating computing:
         int nbr = rand();
@@ -71,6 +77,10 @@ void *consommateur(void *args){
         int nbr;
 
         pthread_mutex_lock(&out);
+        //probably harms efficiency a bit, but assure no deadlock will occur
+        if(outDone>1023){
+            pthread_mutex_unlock(&out);
+            break;}
         outDone++;
         pthread_mutex_unlock(&out);
 
