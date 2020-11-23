@@ -155,5 +155,5 @@ int main(int argc, char *argv[]){
         //printf("consumer nbr %i closed\n",i+1);}
 
     free(buff);
-    printf("Travail terminé,\n productions restantes : %i\n consommations faites : %i\n",inLeft,outDone);
+    //printf("Travail terminé,\n productions restantes : %i\n consommations faites : %i\n",inLeft,outDone);
 }

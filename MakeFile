@@ -9,21 +9,11 @@ clean :
 	rm -fv philo
 	rm -fv prodCons
 	rm -fv lectEcr
-test :
-	echo "Hello World $$f"
-testMulti :
-	for i in {1..5}; do \
-	echo "$$i";\
-	done
-	for i in {1..5}; do \
-	echo "$$i";\
-	done
-	for i in {1..5}; do \
-	echo "$$i";\
-	done
-	for i in {1..5}; do \
-	echo "$$i";\
-	done
-	for i in {1..5}; do \
-	echo "$$i";\
-	done
+testPhilo :
+	./philo 2
+testProdCons :
+	./prodCons 2 2
+testLesctEcr:
+	./lectEcr 2 2
+runTest:
+	@make -s testLesctEcr testProdCons -j3
