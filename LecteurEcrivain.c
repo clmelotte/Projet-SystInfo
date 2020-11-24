@@ -21,7 +21,7 @@ void checkerr(int err){
 void *lecteur(void *arg){
 
     for (int i = 0; i < 2560; i++) {
-        //printf("passage lecteur\n");
+        //printf("passage lecteur nbr %i\n", i);
         pthread_mutex_lock(&ecriture);
         pthread_mutex_lock(&mutLect);
         nLectActif++;
@@ -47,7 +47,7 @@ void *lecteur(void *arg){
 
 void *ecrivain(void *arg){
     for (int i = 0; i < 640; i++) {
-        //printf("passage ecrivain\n");
+        //printf("passage ecrivain nbr %i\n", i);
         pthread_mutex_lock(&mutEcr);
         nEcrActif++;
         if (nEcrActif == 1) {
@@ -124,5 +124,5 @@ int main(int argc, char *argv[]){
         err = pthread_join(lecteurs[i],NULL);
         checkerr(err);}
 
-    //printf("Travail terminé,\n passages Ecriture : %i\n passages Lecture : %i\n",compteEcritures,compteLectures);
+    printf("Travail terminé,\n passages Ecriture : %i\n passages Lecture : %i\n",compteEcritures,compteLectures);
 }
