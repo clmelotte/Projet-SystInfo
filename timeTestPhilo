@@ -1,9 +1,10 @@
 #!/bin/bash
 > timesPhilo.csv
 for i in {1..5}
+do
 	echo -n "$i," >> timesPhilo.csv
-	echo "" >> timesPhilo.csv
 done
+echo "" >> timesPhilo.csv
 for n in {1..16}
 do
 	for i in {1..5}
