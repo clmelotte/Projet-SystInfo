@@ -9,33 +9,38 @@ int count;
 
 
 int lock(int* mutexAdress){
-    int output=1;
+    int output;
+    printf("Mutex adress dans lock: %p avec %d\n", mutexAdress, *mutexAdress );
 
-
-    asm ("movl %0, %%eax\n"
-         "xchgl %%eax, %1\n"
+    asm ("movl $1, %%eax\n"
+         "xchgl %%eax, (%1)\n"
          "movl %%eax, %0 "
-         :"+m"(output)  // y is output operand
-         :"m"(mutexAdress)   // x is input operand
+         :"=r"(output)  // y is output operand
+         :"r"(mutexAdress)   // x is input operand
          :"%eax"
          ); // %eax is clobbered register
-         int b= *mutexAdress;
-    printf("output After lock: %d, %d \n",output, b);
+         printf("output : %d \n",output);
+    printf("count %d \n",count);
+
+
+
 
     return output;
 }
 
 int unlock(int* mutexAdress){
-    int output=0;
+    int output;
+    printf("Mutex adress dans unlock: %p avec valeur %d\n", mutexAdress, *mutexAdress );
 
-    asm("movl %0 , %%eax\n"
-        "xchgl %%eax, %1\n"
+    asm("movl $0 , %%eax\n"
+        "xchgl %%eax, (%1)\n"
         "movl %%eax, %0"
-        : "+m" ( output )
-        : "m" (mutexAdress )
+        : "=r" ( output )
+        : "r" (mutexAdress )
         : "%eax"
         );
     printf("after unlock :%d\n",output);
+
 
     return output;
 
@@ -46,21 +51,22 @@ void *SomTest(void* mut){
     for(int i =0; i<100;i++ ){
         while(lock((int*) mut)){}
         count++;
-        unlock(mut);
+        unlock((int*)mut);
     }
     return NULL;
 }
 
 int main(int argc,char *argv[]){
-    printf("print number 1\n");
+
+
     int n_of_th = atoi(argv[1]);
     count=0;
     pthread_t threadsPhi[n_of_th];
 
-    printf("print number 2\n");
     printf("print number of thread %d\n", n_of_th);
 
     int mut =0;
+    printf("adress sous format int : %d\n", ((int) &mut));
 
     for (int i=0; i<n_of_th; i++){
         pthread_create(&threadsPhi[i],NULL,SomTest,(void*) &mut);
