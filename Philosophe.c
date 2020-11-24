@@ -10,7 +10,7 @@
 int n_of_philo;
 int n_of_philoM;
 
-pthread_mutex_t mutexBa[16];
+pthread_mutex_t mutexBa[32];
 
 void penser(int number){
 
@@ -23,7 +23,6 @@ void *gaucher(void *numbers){
     int itt=1;
     int number= *((int*) numbers);
     while(itt<=100000) {
-        printf("%d\n",itt);
         penser(number);
         pthread_mutex_lock(&mutexBa[number]);
         pthread_mutex_lock(&mutexBa[(number + 1) % n_of_philoM]);
@@ -31,6 +30,7 @@ void *gaucher(void *numbers){
         pthread_mutex_unlock(&mutexBa[(number + 1) % n_of_philoM]);
         itt++;
     }
+    printf("fini %d\n",number);
     return NULL;
 }
 
@@ -41,7 +41,6 @@ void *droitier(void *numbers){
     int itt=1;
     int number= *((int*) numbers);
     while(itt<=100000) {
-        printf("%d\n",itt);
         penser(number);
         pthread_mutex_lock(&mutexBa[(number+1)%n_of_philoM]);
         pthread_mutex_lock(&mutexBa[number]);
@@ -49,13 +48,14 @@ void *droitier(void *numbers){
         pthread_mutex_unlock(&mutexBa[number]);
         itt++;
     }
+    printf("fini %d\n",number);
     return NULL;
 }
 
 
 
 int main(int argc,char *argv[]){
-    printf("entre");
+    printf("entre\n");
     n_of_philo=atoi(argv[1]);
     n_of_philoM=n_of_philo;
     if(n_of_philo==1){n_of_philoM=2;}
@@ -66,7 +66,8 @@ int main(int argc,char *argv[]){
     }
 
     for(int i=0;i<n_of_philo;i++){
-        if(i%2){
+        printf("i= %d\n", i);
+        if(i==0){
             pthread_create(&threadsPhi[i],NULL,gaucher,(void*) &i);
         }
         else{
