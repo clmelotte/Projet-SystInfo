@@ -10,8 +10,8 @@ clean :
 	rm -fv prodCons
 	rm -fv lectEcr
 timeTests:
-	make compile
-	bash ./timeTestPhilo
-	bash ./timeTestProdCons
-	bash ./timeTestLectEcr
-	make clean
+	@make compile
+	@bash ./timeTestPhilo
+	@bash ./timeTestProdCons
+	@bash ./timeTestLectEcr
+	@make clean

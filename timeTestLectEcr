@@ -11,7 +11,7 @@ do
 	echo "" >> timesLectEcr.csv
 	for i in {1..5}
 	do
-		let n2=2+1
+		let n2=n+1
 		/usr/bin/time -a -o "timesLectEcr.csv" -f '%e,' ./lectEcr $n $n2
                 truncate -s-1 timesLectEcr.csv
 	done

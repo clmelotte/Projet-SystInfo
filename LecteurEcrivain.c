@@ -124,5 +124,5 @@ int main(int argc, char *argv[]){
         err = pthread_join(lecteurs[i],NULL);
         checkerr(err);}
 
-    printf("Travail terminé,\n passages Ecriture : %i\n passages Lecture : %i\n",compteEcritures,compteLectures);
+   // printf("Travail terminé,\n passages Ecriture : %i\n passages Lecture : %i\n",compteEcritures,compteLectures);
 }
