@@ -15,3 +15,5 @@ timeTests:
 	@bash ./timeTestProdCons
 	@bash ./timeTestLectEcr
 	@make clean
+plotStats:
+	@python timeStats.py

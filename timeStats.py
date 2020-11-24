@@ -31,7 +31,8 @@ LEMean=np.sum(dataLectEcr,axis=0)/5
 LEStd=np.std(dataLectEcr,axis=0)
 #print(philoMean,philoStd,PCMean,PCStd,LEMean,LEStd)
 
-n=np.arange(2,18)
+n=np.arange(1,17)
+nPC=np.arange(2,17)
 fig, (philo, pc, le) = plt.subplots(1,3,figsize=(15,8))
 plt.subplots_adjust(left=0.1,right=0.9,wspace = 0.2)
 
@@ -42,8 +43,8 @@ philo.set_xticks(n)
 philo.legend(loc='upper right')
 philo.set_title("Problème des philosophes")
 
-pc.plot(n,PCMean,'-b',label='Moyenne')
-pc.plot(n,PCStd,'bo',label='écart-type')
+pc.plot(nPC,PCMean,'-b',label='Moyenne')
+pc.plot(nPC,PCStd,'bo',label='écart-type')
 pc.set(xlabel='n of threads')
 pc.set_xticks(n)
 pc.legend(loc='upper right')
