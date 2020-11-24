@@ -1,3 +1,6 @@
 .idea/
 cmake-build-debug/
 CMakeLists.txt
+philo
+prodCons
+lectEcr
