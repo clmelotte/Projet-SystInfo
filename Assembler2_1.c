@@ -26,9 +26,6 @@ int lock(int* mutexAdress){
          // printf("output : %d \n",output);
     //printf("count %d \n",count);
 
-
-
-
     return output;
 }
 
@@ -68,7 +65,7 @@ int main(int argc,char *argv[]){
     count=0;
     pthread_t threadsPhi[n_of_th];
 
-    printf("print number of thread %d\n", n_of_th);
+    //printf("print number of thread %d\n", n_of_th);
 
     int mut =0;
 
@@ -79,7 +76,6 @@ int main(int argc,char *argv[]){
     for(int i=0;i<n_of_th;i++) {
         pthread_join(threadsPhi[i], NULL);
     }
-    printf("result= %d", count);
-
+    //printf("result= %d", count);
     return 0;
 }
