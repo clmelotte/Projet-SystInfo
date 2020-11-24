@@ -1,5 +1,6 @@
 .idea/
 cmake-build-debug/
+venv/
 CMakeLists.txt
 philo
 prodCons
