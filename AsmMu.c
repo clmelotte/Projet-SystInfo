@@ -1,12 +1,9 @@
-//
-// Created by joseph on 21/11/2020.
-//
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include "AsmMu.h"
 
-int count;
+//int count;
 
 
 int lock(int* mutexAdress){
@@ -57,7 +54,7 @@ void *SomTest(void* mut){
     }
     return NULL;
 }
-
+/*
 int main(int argc,char *argv[]){
 
 
@@ -78,4 +75,4 @@ int main(int argc,char *argv[]){
     }
     //printf("result= %d", count);
     return 0;
-}
+}*/
