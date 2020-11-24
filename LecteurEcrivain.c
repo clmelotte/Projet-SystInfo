@@ -81,20 +81,20 @@ int main(int argc, char *argv[]){
 
     if(argc != 3){
         printf("Error : Wrong number of arguments "
-               "2 arguments are expected: nbr of writers, nbr of readers");
+               "2 arguments are expected: nbr of writers, nbr of readers\n");
         exit(-1);
     }
 
     nEcr = atoi((char *)argv[1]);
     nLect = atoi((char *)argv[2]);
 
-
+    /*
     if(nEcr ==0){
         printf("Warning: the input for the number of writers was either 0 or not a number \n");
     }
     if(nLect ==0){
         printf("Warning: the input for the number of readers was either 0 or not a number \n");
-    }
+    }*/
 
     err=pthread_mutex_init(&mutEcr,NULL);
     checkerr(err);
