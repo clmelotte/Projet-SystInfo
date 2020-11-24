@@ -12,6 +12,16 @@ int n_of_philoM;
 
 pthread_mutex_t mutexBa[32];
 
+
+/* pré: receive the int err (the return form the tested function)
+ * post: ---
+ * it's stop the programme and print a error if err=-1 */
+void checkerr(int err){
+    if (err) {fprintf(stderr,"error err= %i \n", err); exit(-1); }}
+
+/*
+ * Think...
+ */
 void penser(int number){
 
 }
@@ -22,7 +32,7 @@ void penser(int number){
 void *gaucher(void *numbers){
     int itt=1;
     int number= *((int*) numbers);
-    while(itt<=100000) {
+    while(itt<=10000) {
         penser(number);
         pthread_mutex_lock(&mutexBa[number]);
         pthread_mutex_lock(&mutexBa[(number + 1) % n_of_philoM]);
@@ -30,7 +40,7 @@ void *gaucher(void *numbers){
         pthread_mutex_unlock(&mutexBa[(number + 1) % n_of_philoM]);
         itt++;
     }
-    printf("fini %d\n",number);
+    //printf("fini %d\n",number);
     return NULL;
 }
 
@@ -40,7 +50,7 @@ void *gaucher(void *numbers){
 void *droitier(void *numbers){
     int itt=1;
     int number= *((int*) numbers);
-    while(itt<=100000) {
+    while(itt<=10000) {
         penser(number);
         pthread_mutex_lock(&mutexBa[(number+1)%n_of_philoM]);
         pthread_mutex_lock(&mutexBa[number]);
@@ -48,35 +58,43 @@ void *droitier(void *numbers){
         pthread_mutex_unlock(&mutexBa[number]);
         itt++;
     }
-    printf("fini %d\n",number);
+    //printf("fini %d\n",number);
     return NULL;
 }
 
 
 
 int main(int argc,char *argv[]){
-    printf("entre\n");
+
+    int err;
+    //printf("entre\n");
     n_of_philo=atoi(argv[1]);
     n_of_philoM=n_of_philo;
     if(n_of_philo==1){n_of_philoM=2;}
     pthread_t threadsPhi[n_of_philo];
+    int* tabI[n_of_philo];
 
     for(int i=0;i<n_of_philoM;i++){
-        pthread_mutex_init(&mutexBa[i],NULL);
+        err=pthread_mutex_init(&mutexBa[i],NULL);
+        checkerr(err);
     }
 
     for(int i=0;i<n_of_philo;i++){
-        printf("i= %d\n", i);
+        //printf("i= %d\n", i);
+        tabI[i]=i;
         if(i==0){
-            pthread_create(&threadsPhi[i],NULL,gaucher,(void*) &i);
+            err=pthread_create(&threadsPhi[i],NULL,gaucher,(void*) &(tabI[i]));
+            checkerr(err);
+
         }
         else{
-            pthread_create(&threadsPhi[i],NULL,droitier,(void*) &i);
+            err=pthread_create(&threadsPhi[i],NULL,droitier,(void*) &(tabI[i]));
+            checkerr(err);
         }
     }
     for(int i=0;i<n_of_philo;i++) {
-        pthread_join(threadsPhi[i], NULL);
+        err=pthread_join(threadsPhi[i], NULL);
+        checkerr(err);
     }
-    printf("réussiiiiiiii ?!");
     return 0;
 }
