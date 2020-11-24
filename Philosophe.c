@@ -10,7 +10,7 @@
 int n_of_philo;
 int n_of_philoM;
 
-pthread_mutex_t mutexBa[32];
+pthread_mutex_t mutexBa[16];
 
 
 /* pré: receive the int err (the return form the tested function)
