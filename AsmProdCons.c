@@ -1,7 +1,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "AsmMuVT.h"
+#include "AsmMu.h"
 #include "AsmSem.h"
 
 int inLeft;
@@ -45,23 +45,23 @@ int get(){
 void *producteur(void *args){
     while (inLeft>0) {
         //printf("producing started, left: %i\n", inLeft);
-        lockVT(in);
+        lock(in);
         //printf("lock done\n");
         //probably harms efficiency a bit, but assures no deadlock will occur
         if(inLeft<1){
-            unlockVT(in);
+            unlock(in);
             break;}
         inLeft--;
-        unlockVT(in);
+        unlock(in);
 
         //producing a random number ans simulating computing:
         int nbr = rand();
         while (rand() > RAND_MAX / 10000) {}
 
         sem_wait(empty);
-        lockVT(buffer);
+        lock(buffer);
         put(nbr);
-        unlockVT(buffer);
+        unlock(buffer);
         sem_post(full);
 
         //printf("producing done, nbr given: %i\n", nbr);
@@ -72,18 +72,18 @@ void *consommateur(void *args){
     while (outDone<1024) {
         int nbr;
         //printf("consuming started, done: %i\n", outDone);
-        lockVT(out);
+        lock(out);
         //printf("lock done\n");
         //probably harms efficiency a bit, but assures no deadlock will occur
         if(outDone>1023){
-            unlockVT(out);
+            unlock(out);
             break;}
         outDone++;
-        unlockVT(out);
+        unlock(out);
         sem_wait(full);
-        lockVT(buffer);
+        lock(buffer);
         nbr = get();
-        unlockVT(buffer);
+        unlock(buffer);
         sem_post(empty);
 
         //simulating computing;
@@ -119,9 +119,9 @@ int main(int argc, char *argv[]){
     in = (int*) malloc(sizeof(int));
     out = (int*) malloc(sizeof(int));
     buffer = (int*) malloc(sizeof(int));
-    createVT(in);
-    createVT(out);
-    createVT(buffer);
+    create(in);
+    create(out);
+    create(buffer);
 
     full = (int *) malloc(sizeof(int));
     empty = (int *) malloc(sizeof(int));
