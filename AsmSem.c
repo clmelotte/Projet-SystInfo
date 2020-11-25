@@ -1,6 +1,4 @@
-//
-//
-//
+#include "AsmSem.h"
 
 int sem_create(int* sem, int start_val){
     int output;
@@ -23,7 +21,7 @@ int sem_wait(int* sem){
         "subl $1, %%eax\n"
         "movl %%eax, %0\n"
         "xchgl %%eax, (%1)\n"
-        :"=r" (output)
+        :"=&r" (output)
         :"r" (sem)
         :"%eax");
     return output;
