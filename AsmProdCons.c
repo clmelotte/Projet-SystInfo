@@ -75,12 +75,12 @@ void *consommateur(void *args){
         int nbr;
 
         lock(out);
-        //probably harms efficiency a bit, but assure no deadlock will occur
+        //probably harms efficiency a bit, but assures no deadlock will occur
         if(outDone>1023){
             unlock(out);
             break;}
         outDone++;
-        lock(out);
+        unlock(out);
 
         sem_wait(&full);
         lock(buffer);
@@ -117,6 +117,13 @@ int main(int argc, char *argv[]){
     buffLen=8;
     buffFirstFree=0;
     buffFirstFull=0;
+    
+    int inValue=0;
+    int outValue=0;
+    int bufferValue=0;  
+    in=&inValue;
+    out=&outValue;
+    buffer=&bufferValue;
 
     err=sem_init(&full,1,0);
     checkerr(err);

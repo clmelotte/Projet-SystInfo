@@ -4,8 +4,8 @@
 
 int nLectActif = 0;
 int nEcrActif = 0;
-int compteLectures = 0;
-int compteEcritures = 0;
+//int compteLectures = 0;
+//int compteEcritures = 0;
 pthread_mutex_t mutLect;
 pthread_mutex_t mutEcr;
 pthread_mutex_t dbLock;
@@ -36,7 +36,7 @@ void *lecteur(void *arg){
         if (nLectActif == 0) {
             pthread_mutex_unlock(&dbLock);
         }
-        compteLectures++;
+        //compteLectures++;
         pthread_mutex_unlock(&mutLect);
     }
     //printf("lecteur terminé\n");
@@ -63,7 +63,7 @@ void *ecrivain(void *arg){
         if (nEcrActif == 0) {
             pthread_mutex_unlock(&ecriture);
         }
-        compteEcritures++;
+        //compteEcritures++;
         pthread_mutex_unlock(&mutEcr);
     }
     //printf("ecrivain terminé\n");

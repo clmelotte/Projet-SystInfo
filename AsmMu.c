@@ -15,7 +15,7 @@ int lock(int* mutexAdress){
          "xchgl %%eax, (%1)\n"
          "testl %%eax,%%eax\n"
          "jnz 1b\n"
-         "movl %%eax, %0 " //usefull in cas of problem
+         "movl %%eax, %0\n" //usefull in cas of problem
          :"=r"(output)  // y is output operand
          :"r"(mutexAdress)   // x is input operand
          :"%eax"
@@ -32,7 +32,7 @@ int unlock(int* mutexAdress){
 
     asm("movl $0 , %%eax\n"
         "xchgl %%eax, (%1)\n"
-        "movl %%eax, %0"
+        "movl %%eax, %0\n"
         : "=r" ( output )
         : "r" (mutexAdress )
         : "%eax"

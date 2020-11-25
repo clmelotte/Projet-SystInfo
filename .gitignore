@@ -5,4 +5,5 @@ CMakeLists.txt
 philo
 prodCons
 lectEcr
+asmCons
 *.swp
