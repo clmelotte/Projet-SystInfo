@@ -120,12 +120,22 @@ int main(int argc, char *argv[]){
     buffFirstFree=0;
     buffFirstFull=0;
 
+    /*
     int inValue=0;
     int outValue=0;
     int bufferValue=0;  
     in=&inValue;
     out=&outValue;
     buffer=&bufferValue;
+     */
+
+    in = (int*) malloc(sizeof(int));
+    out = (int*) malloc(sizeof(int));
+    buffer = (int*) malloc(sizeof(int));
+
+    create(in);
+    create(out);
+    create(buffer);
 
     err=sem_init(&full,1,0);
     checkerr(err);
@@ -155,5 +165,5 @@ int main(int argc, char *argv[]){
     //printf("consumer nbr %i closed\n",i+1);}
 
     free(buff);
-    //printf("Travail terminé,\n productions restantes : %i\n consommations faites : %i\n",inLeft,outDone);
+    printf("Travail terminé,\n productions restantes : %i\n consommations faites : %i\n",inLeft,outDone);
 }

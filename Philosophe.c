@@ -72,7 +72,7 @@ int main(int argc,char *argv[]){
     n_of_philoM=n_of_philo;
     if(n_of_philo==1){n_of_philoM=2;}
     pthread_t threadsPhi[n_of_philo];
-    int* tabI[n_of_philo];
+    int tabI[n_of_philo];
 
     for(int i=0;i<n_of_philoM;i++){
         err=pthread_mutex_init(&mutexBa[i],NULL);

@@ -3,6 +3,8 @@
 
 //int count;
 
+int create(int* mutexAdress);
+
 int lock(int* mutexAdress);
 
 int unlock(int* mutexAdress);

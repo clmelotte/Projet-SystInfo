@@ -5,6 +5,18 @@
 
 //int count;
 
+int create(int* mutexAdress){
+    int output;
+    printf("entrer %d",*mutexAdress);
+    asm ("movl $0, %%eax\n"
+         "xchgl %%eax, (%1)\n"
+         "movl %%eax, %0"
+    :"=r" (output)
+    :"r" (mutexAdress)
+    :"%eax"
+    );
+    return 0;
+}
 
 int lock(int* mutexAdress){
     int output;
