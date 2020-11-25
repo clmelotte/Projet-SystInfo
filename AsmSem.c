@@ -2,20 +2,15 @@
 //
 //
 
-
-int main(int argc,char * argv[]){
-
-}
-
-int sem_create(int* sem, int size){
+int sem_create(int* sem, int start_val){
     int output;
     asm("movl %2, %%eax\n"
         "xchgl %%eax, (%1)\n"
         "movl %%eax, %0"
         : "=r" (output)
-        : "r" (sem), "r"(size)
+        : "r" (sem), "r"(start_val)
         : "%eax");
-    return output != size;
+    return 0;
 }
 
 int sem_wait(int* sem){
@@ -23,7 +18,7 @@ int sem_wait(int* sem){
     asm("1:\n"
         "movl $0, %%eax\n"
         "xchgl %%eax, (%1)\n"
-        "testl %%eax, %%eax"
+        "testl %%eax, %%eax\n"
         "jz 1b\n"
         "subl $1, %%eax\n"
         "movl %%eax, %0\n"
@@ -31,6 +26,7 @@ int sem_wait(int* sem){
         :"=r" (output)
         :"r" (sem)
         :"%eax");
+    return output;
 }
 
 int sem_post(int *sem){
@@ -45,4 +41,5 @@ int sem_post(int *sem){
         :"r" (sem)
         :"%eax"
         );
+    return output;
 }
