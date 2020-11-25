@@ -10,6 +10,8 @@ clean :
 	@rm -fv prodCons
 	@rm -fv lectEcr
 	@rm -fv asmProd
+	@rm -fv asmPhilo
+	@rm -fv asmLect
 timeTests:
 	@make compile
 	@bash ./timeTestPhilo
@@ -18,6 +20,10 @@ timeTests:
 	@make clean
 plotStats:
 	@python timeStats.py
-asmCompile:
+asmCompile: AsmProdCons.c AsmPhilo.c AsmLectEcr.c
 	gcc -w -std=c99 -o asmProd AsmProdCons.c AsmMu.c -lpthread -lm -fasm
 	chmod a+x asmProd
+	gcc -w -std=c99 -o asmPhilo AsmPhilo.c AsmMu.c -lpthread -fasm
+	chmod a+x asmPhilo
+	gcc -w -std=c99 -o asmLect AsmLectEcr.c AsmMu.c -lpthread -fasm
+	chmod a+x asmLect

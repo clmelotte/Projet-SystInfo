@@ -17,7 +17,7 @@ void checkerr(int err){
 void *lecteur(void *arg){
 
     for (int i = 0; i < 2560; i++) {
-        printf("passage lecteur nbr %i\n", i);
+        //printf("passage lecteur nbr %i\n", i);
         lock(ecriture);
         lock(mutLect);
         nLectActif++;
@@ -43,7 +43,7 @@ void *lecteur(void *arg){
 
 void *ecrivain(void *arg){
     for (int i = 0; i < 640; i++) {
-        printf("passage ecrivain nbr %i\n", i);
+        //printf("passage ecrivain nbr %i\n", i);
         lock(mutEcr);
         nEcrActif++;
         if (nEcrActif == 1) {
