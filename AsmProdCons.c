@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <limits.h>
-#include <semaphore.h>
 #include "AsmMu.h"
+#include "AsmSem.h"
 
 int inLeft;
 int outDone;
@@ -17,8 +17,8 @@ int buffFirstFull;
 int *in;
 int *out;
 int *buffer;
-sem_t full;
-sem_t empty;
+int *full;
+int *empty;
 
 void checkerr(int err){
     if (err) {fprintf(stderr,"error err= %i \n", err); exit(-1); }}
@@ -48,24 +48,22 @@ void *producteur(void *args){
         //printf("producing started, left: %i\n", inLeft);
         lock(in);
         //printf("lock done\n");
-        //probably harms efficiency a bit, but assure no deadlock will occur
+        //probably harms efficiency a bit, but assures no deadlock will occur
         if(inLeft<1){
             unlock(in);
             break;}
         inLeft--;
         unlock(in);
 
-
-
         //producing a random number ans simulating computing:
         int nbr = rand();
         while (rand() > RAND_MAX / 10000) {}
 
-        sem_wait(&empty);
+        int err=sem_wait(empty);
         lock(buffer);
         put(nbr);
         unlock(buffer);
-        sem_post(&full);
+        sem_post(full);
 
         //printf("producing done, nbr given: %i\n", nbr);
     }
@@ -83,12 +81,11 @@ void *consommateur(void *args){
             break;}
         outDone++;
         unlock(out);
-
-        sem_wait(&full);
+        sem_wait(full);
         lock(buffer);
         nbr = get();
         unlock(buffer);
-        sem_post(&empty);
+        sem_post(empty);
 
         //simulating computing;
         while (rand() > RAND_MAX / 10000) {}
@@ -136,20 +133,19 @@ int main(int argc, char *argv[]){
     create(out);
     create(buffer);
 
-    err=sem_init(&full,1,0);
-    checkerr(err);
-    err=sem_init(&empty,1,8);
-    checkerr(err);
+    full = (int *) malloc(sizeof(int));
+    empty = (int *) malloc(sizeof(int));
+    sem_create(full,0);
+    sem_create(empty,8);
 
     pthread_t producteurs[(nProd)];
     pthread_t consommateurs[(nCons)];
-    void *emptyArgs;
 
     for(int i = 0; i < nProd; i++){
-        err=pthread_create(&producteurs[i],NULL,producteur,emptyArgs);
+        err=pthread_create(&producteurs[i],NULL,producteur,NULL);
         checkerr(err);}
     for(int i = 0; i < nCons; i++){
-        err=pthread_create(&consommateurs[i],NULL,consommateur,emptyArgs);
+        err=pthread_create(&consommateurs[i],NULL,consommateur,NULL);
         checkerr(err);}
 
 
@@ -167,5 +163,7 @@ int main(int argc, char *argv[]){
     free(in);
     free(out);
     free(buffer);
+    free(full);
+    free(empty);
     //printf("Travail terminé,\n productions restantes : %i\n consommations faites : %i\n",inLeft,outDone);
 }
