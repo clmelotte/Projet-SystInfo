@@ -1,13 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
+
 #include "AsmMu.h"
 
 //int count;
 
 int create(int* mutexAdress){
     int output;
-    printf("entrer %d",*mutexAdress);
+    //printf("entrer %d",*mutexAdress);
     asm ("movl $0, %%eax\n"
          "xchgl %%eax, (%1)\n"
          "movl %%eax, %0"
@@ -56,16 +54,6 @@ int unlock(int* mutexAdress){
 }
 
 
-void *SomTest(void* mut){
-    for(int i =0; i<6400;i++ ){
-        lock((int*) mut);
-        while(rand() > RAND_MAX/10000){}
-        //count++;
-        unlock((int*)mut);
-
-    }
-    return NULL;
-}
 /*
 int main(int argc,char *argv[]){
 

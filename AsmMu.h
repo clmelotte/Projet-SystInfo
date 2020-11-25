@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <stdio.h>
+
 #ifndef PROJET_SYSTINFO_ASMMU_H
 #define PROJET_SYSTINFO_ASMMU_H
 
