@@ -12,6 +12,4 @@ int lock(int* mutexAdress);
 
 int unlock(int* mutexAdress);
 
-void *SomTest(void* mut);
-
 #endif //PROJET_SYSTINFO_ASMMU_H
