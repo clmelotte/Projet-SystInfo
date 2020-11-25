@@ -1,9 +1,9 @@
 compile : Philosophe.c ProducteurConsommateur.c LecteurEcrivain.c
-	@gcc -w -std=c99 -o philo Philosophe.c -lpthread -lm
+	@gcc -w -std=c99 -o philo Philosophe.c -lpthread 
 	@chmod a+x philo
-	@gcc -w -std=c99 -o prodCons ProducteurConsommateur.c -lpthread -lm
+	@gcc -w -std=c99 -o prodCons ProducteurConsommateur.c -lpthread
 	@chmod a+x prodCons
-	@gcc -w -std=c99 -o lectEcr LecteurEcrivain.c -lpthread -lm 
+	@gcc -w -std=c99 -o lectEcr LecteurEcrivain.c -lpthread
 	@chmod a+x lectEcr
 clean :
 	@rm -fv philo
@@ -21,7 +21,7 @@ timeTests:
 plotStats:
 	@python timeStats.py
 asmCompile: AsmProdCons.c AsmPhilo.c AsmLectEcr.c
-	gcc -w -std=c99 -o asmProd AsmProdCons.c AsmMu.c -lpthread -lm -fasm
+	gcc -w -std=c99 -o asmProd AsmProdCons.c AsmMu.c -lpthread -fasm
 	chmod a+x asmProd
 	gcc -w -std=c99 -o asmPhilo AsmPhilo.c AsmMu.c -lpthread -fasm
 	chmod a+x asmPhilo
