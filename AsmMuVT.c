@@ -1,14 +1,14 @@
 //
-// Created by josep on 25/11/2020.
+//
 //
 #import "AsmMuVT.h"
+
 
 /*
  * input: int* that's already malloc!
  */
 int createVT(int* mutexAdress){
     int output;
-    //printf("entrer %d",*mutexAdress);
     asm ("movl $0, %%eax\n"
          "xchgl %%eax, (%1)\n"
          "movl %%eax, %0"
@@ -23,7 +23,6 @@ int createVT(int* mutexAdress){
 
 int lockVT(int* mutexAdress){
     int output=0;
-    //printf("Mutex adress dans lock: %p avec %d\n", mutexAdress, *mutexAdress );
     while(lockcheckVT(mutexAdress)){
         while(*mutexAdress==1){}
     }
@@ -43,14 +42,11 @@ int lockcheckVT(int* mutexAdress){
     :"r"(mutexAdress)   //  input operand
     :"%eax"
     ); // %eax is clobbered register
-    // printf("output : %d \n",output);
-    //printf("count %d \n",count);
     return output;
 }
 
 int unlockVT(int* mutexAdress){
     int output;
-    //printf("Mutex adress dans unlock: %p avec valeur %d\n", mutexAdress, *mutexAdress );
 
     asm("movl $0 , %%eax\n"
         "xchgl %%eax, (%1)\n"
@@ -59,7 +55,6 @@ int unlockVT(int* mutexAdress){
     : "r" (mutexAdress )
     : "%eax"
     );
-    //printf("after unlock :%d\n",output);
 
     return output;
 

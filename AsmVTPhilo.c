@@ -1,16 +1,16 @@
 //
+// Created by josep on 25/11/2020.
 //
-//
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
-#include "AsmMu.h"
-
+#include "AsmMuVT.h"
 
 int n_of_philo;
 int n_of_philoM;
 
-int *mutexBa[16];
+int *mutexBa[32];
 
 
 /* pré: receive the int err (the return form the tested function)
@@ -34,10 +34,10 @@ void *gaucher(void *numbers){
     int number= *((int*) numbers);
     while(itt<=1000000) {
         penser(number);
-        lock(mutexBa[number]);
-        lock(mutexBa[(number + 1) % n_of_philoM]);
-        unlock(mutexBa[number]);
-        unlock(mutexBa[(number + 1) % n_of_philoM]);
+        lockVT(mutexBa[number]);
+        lockVT(mutexBa[(number + 1) % n_of_philoM]);
+        unlockVT(mutexBa[number]);
+        unlockVT(mutexBa[(number + 1) % n_of_philoM]);
         itt++;
     }
     return NULL;
@@ -51,10 +51,10 @@ void *droitier(void *numbers){
     int number= *((int*) numbers);
     while(itt<=1000000) {
         penser(number);
-        lock(mutexBa[(number+1)%n_of_philoM]);
-        lock(mutexBa[number]);
-        unlock(mutexBa[(number+1)%n_of_philoM]);
-        unlock(mutexBa[number]);
+        lockVT(mutexBa[(number+1)%n_of_philoM]);
+        lockVT(mutexBa[number]);
+        unlockVT(mutexBa[(number+1)%n_of_philoM]);
+        unlockVT(mutexBa[number]);
         itt++;
     }
     return NULL;
@@ -73,7 +73,7 @@ int main(int argc,char *argv[]){
 
     for(int i=0;i<n_of_philoM;i++){
         mutexBa[i]=(int *) malloc(sizeof(int));
-        create(mutexBa[i]);
+        createVT(mutexBa[i]);
     }
 
     for(int i=0;i<n_of_philo;i++){

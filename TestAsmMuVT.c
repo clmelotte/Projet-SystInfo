@@ -2,11 +2,23 @@
 // Created by josep on 25/11/2020.
 //
 
-#include "TestAsmMuVT.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
 #include "AsmMuVT.c"
 
 
 int* mut;
+
+void *SomTestVT(void* mutx){
+    for(int i =0; i<6400;i++ ){
+        lockVT((int*) mutx);
+        while(rand() > RAND_MAX/10000){}
+        unlockVT((int*) mutx);
+
+    }
+    return NULL;
+}
 
 int main(int argc,char *argv[]){
     if (argc != 2){printf("Error : Wrong number of arguments, "
@@ -16,10 +28,8 @@ int main(int argc,char *argv[]){
 
 
     int n_of_th = atoi(argv[1]);
-    count=0;
     pthread_t threadsPhi[n_of_th];
 
-    //printf("print number of thread %d\n", n_of_th);
 
     mut =(int*) malloc(sizeof(int));
     createVT(mut);
@@ -31,18 +41,7 @@ int main(int argc,char *argv[]){
     for(int i=0;i<n_of_th;i++) {
         pthread_join(threadsPhi[i], NULL);
     }
-    printf("result= %d", count);
     return 0;
 }
 
 
-void *SomTestVT(void* mut){
-    for(int i =0; i<6400;i++ ){
-        lockVT((int*) mut);
-        //while(rand() > RAND_MAX/10000){}
-        count++;
-        unlockVT((int*)mut);
-
-    }
-    return NULL;
-}

@@ -1,14 +1,12 @@
 
 #include "AsmMu.h"
 
-//int count;
 
 /*
  * input: int* that's already malloc!
  */
 int create(int* mutexAdress){
     int output;
-    //printf("entrer %d",*mutexAdress);
     asm ("movl $0, %%eax\n"
          "xchgl %%eax, (%1)\n"
          "movl %%eax, %0"
@@ -21,7 +19,6 @@ int create(int* mutexAdress){
 
 int lock(int* mutexAdress){
     int output;
-    //printf("Mutex adress dans lock: %p avec %d\n", mutexAdress, *mutexAdress );
 
     asm ("1:\n"
          "movl $1, %%eax\n"
@@ -33,15 +30,13 @@ int lock(int* mutexAdress){
          :"r"(mutexAdress)   // x is input operand
          :"%eax"
          ); // %eax is clobbered register
-         // printf("output : %d \n",output);
-    //printf("count %d \n",count);
+
 
     return output;
 }
 
 int unlock(int* mutexAdress){
     int output;
-    //printf("Mutex adress dans unlock: %p avec valeur %d\n", mutexAdress, *mutexAdress );
 
     asm("movl $0 , %%eax\n"
         "xchgl %%eax, (%1)\n"
@@ -50,7 +45,6 @@ int unlock(int* mutexAdress){
         : "r" (mutexAdress )
         : "%eax"
         );
-    //printf("after unlock :%d\n",output);
 
     return output;
 
