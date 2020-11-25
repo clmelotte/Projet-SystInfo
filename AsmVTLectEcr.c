@@ -107,13 +107,12 @@ int main(int argc, char *argv[]){
 
     pthread_t ecrivains[(nEcr)];
     pthread_t lecteurs[(nLect)];
-    void *emptyArgs;
 
     for(int i = 0; i < nEcr; i++){
-        err = pthread_create(&ecrivains[i],NULL,ecrivain,emptyArgs);
+        err = pthread_create(&ecrivains[i],NULL,ecrivain,NULL);
         checkerr(err);}
     for(int i = 0; i < nLect; i++){
-        err = pthread_create(&lecteurs[i],NULL,lecteur,emptyArgs);
+        err = pthread_create(&lecteurs[i],NULL,lecteur,NULL);
         checkerr(err);}
 
 
