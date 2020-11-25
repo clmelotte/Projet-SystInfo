@@ -53,26 +53,3 @@ int unlock(int* mutexAdress){
 
 }
 
-
-/*
-int main(int argc,char *argv[]){
-
-
-    int n_of_th = atoi(argv[1]);
-    count=0;
-    pthread_t threadsPhi[n_of_th];
-
-    //printf("print number of thread %d\n", n_of_th);
-
-    int mut =0;
-
-    for (int i=0; i<n_of_th; i++){
-        pthread_create(&threadsPhi[i],NULL,SomTest,(void*) &mut);
-    }
-
-    for(int i=0;i<n_of_th;i++) {
-        pthread_join(threadsPhi[i], NULL);
-    }
-    //printf("result= %d", count);
-    return 0;
-}*/
