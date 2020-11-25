@@ -1,7 +1,7 @@
 #ifndef PROJET_SYSTINFO_ASMMU_H
 #define PROJET_SYSTINFO_ASMMU_H
 
-int count;
+//int count;
 
 int lock(int* mutexAdress);
 

@@ -47,6 +47,7 @@ void *producteur(void *args){
     while (inLeft>0) {
         //printf("producing started, left: %i\n", inLeft);
         lock(in);
+        //printf("lock done\n");
         //probably harms efficiency a bit, but assure no deadlock will occur
         if(inLeft<1){
             unlock(in);
@@ -73,8 +74,9 @@ void *producteur(void *args){
 void *consommateur(void *args){
     while (outDone<1024) {
         int nbr;
-
+        //printf("consuming started, done: %i\n", outDone);
         lock(out);
+        //printf("lock done\n");
         //probably harms efficiency a bit, but assures no deadlock will occur
         if(outDone>1023){
             unlock(out);
@@ -117,7 +119,7 @@ int main(int argc, char *argv[]){
     buffLen=8;
     buffFirstFree=0;
     buffFirstFull=0;
-    
+
     int inValue=0;
     int outValue=0;
     int bufferValue=0;  
