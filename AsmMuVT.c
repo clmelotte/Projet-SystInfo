@@ -20,6 +20,7 @@ int createVT(int* mutexAdress){
 }
 
 
+
 int lockVT(int* mutexAdress){
     int output=0;
     //printf("Mutex adress dans lock: %p avec %d\n", mutexAdress, *mutexAdress );
