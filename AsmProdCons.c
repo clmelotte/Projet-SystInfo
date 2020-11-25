@@ -1,8 +1,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <limits.h>
-#include "AsmMu.h"
+#include "AsmMuVT.h"
 #include "AsmSem.h"
 
 int inLeft;
@@ -46,23 +45,23 @@ int get(){
 void *producteur(void *args){
     while (inLeft>0) {
         //printf("producing started, left: %i\n", inLeft);
-        lock(in);
+        lockVT(in);
         //printf("lock done\n");
         //probably harms efficiency a bit, but assures no deadlock will occur
         if(inLeft<1){
-            unlock(in);
+            unlockVT(in);
             break;}
         inLeft--;
-        unlock(in);
+        unlockVT(in);
 
         //producing a random number ans simulating computing:
         int nbr = rand();
         while (rand() > RAND_MAX / 10000) {}
 
-        int err=sem_wait(empty);
-        lock(buffer);
+        sem_wait(empty);
+        lockVT(buffer);
         put(nbr);
-        unlock(buffer);
+        unlockVT(buffer);
         sem_post(full);
 
         //printf("producing done, nbr given: %i\n", nbr);
@@ -73,18 +72,18 @@ void *consommateur(void *args){
     while (outDone<1024) {
         int nbr;
         //printf("consuming started, done: %i\n", outDone);
-        lock(out);
+        lockVT(out);
         //printf("lock done\n");
         //probably harms efficiency a bit, but assures no deadlock will occur
         if(outDone>1023){
-            unlock(out);
+            unlockVT(out);
             break;}
         outDone++;
-        unlock(out);
+        unlockVT(out);
         sem_wait(full);
-        lock(buffer);
+        lockVT(buffer);
         nbr = get();
-        unlock(buffer);
+        unlockVT(buffer);
         sem_post(empty);
 
         //simulating computing;
@@ -117,21 +116,12 @@ int main(int argc, char *argv[]){
     buffFirstFree=0;
     buffFirstFull=0;
 
-    /*
-    int inValue=0;
-    int outValue=0;
-    int bufferValue=0;  
-    in=&inValue;
-    out=&outValue;
-    buffer=&bufferValue;
-     */
-
     in = (int*) malloc(sizeof(int));
     out = (int*) malloc(sizeof(int));
     buffer = (int*) malloc(sizeof(int));
-    create(in);
-    create(out);
-    create(buffer);
+    createVT(in);
+    createVT(out);
+    createVT(buffer);
 
     full = (int *) malloc(sizeof(int));
     empty = (int *) malloc(sizeof(int));
