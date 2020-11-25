@@ -41,6 +41,7 @@ int main(int argc,char *argv[]){
     for(int i=0;i<n_of_th;i++) {
         pthread_join(threadsPhi[i], NULL);
     }
+    free(mut);
     return 0;
 }
 
