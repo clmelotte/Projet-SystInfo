@@ -1,13 +1,14 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "AsmMu.h"
 
 int nLectActif = 0;
 int nEcrActif = 0;
-pthread_mutex_t mutLect;
-pthread_mutex_t mutEcr;
-pthread_mutex_t dbLock;
-pthread_mutex_t ecriture;
+int *mutLect;
+int *mutEcr;
+int *dbLock;
+int *ecriture;
 
 void checkerr(int err){
     if (err) {fprintf(stderr,"error err= %i \n", err); exit(-1); }}
@@ -17,25 +18,25 @@ void *lecteur(void *arg){
 
     for (int i = 0; i < 2560; i++) {
         //printf("passage lecteur nbr %i\n", i);
-        pthread_mutex_lock(&ecriture);
-        pthread_mutex_lock(&mutLect);
+        lock(ecriture);
+        lock(mutLect);
         nLectActif++;
         if (nLectActif == 1) {
-            pthread_mutex_lock(&dbLock);
+            lock(dbLock);
         }
-        pthread_mutex_unlock(&mutLect);
-        pthread_mutex_unlock(&ecriture);
+        unlock(mutLect);
+        unlock(ecriture);
 
         //lecture
         while (rand() > RAND_MAX / 10000) {}
 
-        pthread_mutex_lock(&mutLect);
+        lock(mutLect);
         nLectActif--;
         if (nLectActif == 0) {
-            pthread_mutex_unlock(&dbLock);
+            unlock(dbLock);
         }
         //compteLectures++;
-        pthread_mutex_unlock(&mutLect);
+        unlock(mutLect);
     }
     //printf("lecteur terminé\n");
 }
@@ -43,26 +44,26 @@ void *lecteur(void *arg){
 void *ecrivain(void *arg){
     for (int i = 0; i < 640; i++) {
         //printf("passage ecrivain nbr %i\n", i);
-        pthread_mutex_lock(&mutEcr);
+        lock(mutEcr);
         nEcrActif++;
         if (nEcrActif == 1) {
-            pthread_mutex_lock(&ecriture);
+            lock(ecriture);
         }
-        pthread_mutex_unlock(&mutEcr);
-        pthread_mutex_lock(&dbLock);
+        unlock(mutEcr);
+        lock(dbLock);
 
         //ecriture
         while (rand() > RAND_MAX / 10000) {}
 
 
-        pthread_mutex_unlock(&dbLock);
-        pthread_mutex_lock(&mutEcr);
+        unlock(dbLock);
+        lock(mutEcr);
         nEcrActif--;
         if (nEcrActif == 0) {
-            pthread_mutex_unlock(&ecriture);
+            unlock(ecriture);
         }
         //compteEcritures++;
-        pthread_mutex_unlock(&mutEcr);
+        unlock(mutEcr);
     }
     //printf("ecrivain terminé\n");
 }
@@ -91,14 +92,14 @@ int main(int argc, char *argv[]){
         printf("Warning: the input for the number of readers was either 0 or not a number \n");
     }*/
 
-    err=pthread_mutex_init(&mutEcr,NULL);
-    checkerr(err);
-    err=pthread_mutex_init(&mutLect,NULL);
-    checkerr(err);
-    err=pthread_mutex_init(&ecriture,NULL);
-    checkerr(err);
-    err=pthread_mutex_init(&dbLock,NULL);
-    checkerr(err);
+    mutLect=(int *) malloc(sizeof(int));
+    mutEcr=(int *) malloc(sizeof(int));
+    dbLock=(int *) malloc(sizeof(int));
+    ecriture=(int *) malloc(sizeof(int));
+    create(mutLect);
+    create(mutEcr);
+    create(dbLock);
+    create(ecriture);
 
     pthread_t ecrivains[(nEcr)];
     pthread_t lecteurs[(nLect)];
@@ -119,5 +120,9 @@ int main(int argc, char *argv[]){
         err = pthread_join(lecteurs[i],NULL);
         checkerr(err);}
 
-   // printf("Travail terminé,\n passages Ecriture : %i\n passages Lecture : %i\n",compteEcritures,compteLectures);
+    free(mutLect);
+    free(mutEcr);
+    free(dbLock);
+    free(ecriture);
+    // printf("Travail terminé,\n passages Ecriture : %i\n passages Lecture : %i\n",compteEcritures,compteLectures);
 }
