@@ -132,7 +132,6 @@ int main(int argc, char *argv[]){
     in = (int*) malloc(sizeof(int));
     out = (int*) malloc(sizeof(int));
     buffer = (int*) malloc(sizeof(int));
-
     create(in);
     create(out);
     create(buffer);
@@ -165,5 +164,8 @@ int main(int argc, char *argv[]){
     //printf("consumer nbr %i closed\n",i+1);}
 
     free(buff);
-    printf("Travail terminé,\n productions restantes : %i\n consommations faites : %i\n",inLeft,outDone);
+    free(in);
+    free(out);
+    free(buffer);
+    //printf("Travail terminé,\n productions restantes : %i\n consommations faites : %i\n",inLeft,outDone);
 }
