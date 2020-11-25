@@ -12,6 +12,8 @@ clean :
 	@rm -fv asmProd
 	@rm -fv asmPhilo
 	@rm -fv asmLect
+	@rm -fv testAsm
+	@rm -fv testAsmVT
 timeTests:
 	@make compile
 	@bash ./timeTestPhilo
@@ -27,3 +29,8 @@ asmCompile: AsmProdCons.c AsmPhilo.c AsmLectEcr.c AsmMu.c AsmSem.c
 	chmod a+x asmPhilo
 	gcc -w -std=c99 -o asmLect AsmLectEcr.c AsmMu.c -lpthread -fasm
 	chmod a+x asmLect
+asmTestsCompile: TestAsmMu.c AsmMu.c TestAsmMuVT.c AsmMuVT.c
+	gcc -w -std=c99 -o testAsm TestAsmMu.c AsmMu.c -lpthread -fasm
+	chmod a+x testAsm
+	gcc -w -std=c99 -o testAsmVT TestAsmMuVT.c AsmMuVT.c -lpthread -fasm
+	chmod a+x testAsmVT
