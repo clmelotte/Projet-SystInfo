@@ -20,8 +20,8 @@ timeTests:
 	@make clean
 plotStats:
 	@python timeStats.py
-asmCompile: AsmProdCons.c AsmPhilo.c AsmLectEcr.c
-	gcc -w -std=c99 -o asmProd AsmProdCons.c AsmMu.c -lpthread -fasm
+asmCompile: AsmProdCons.c AsmPhilo.c AsmLectEcr.c AsmMu.c AsmSem.c
+	gcc -w -std=c99 -o asmProd AsmProdCons.c AsmMu.c AsmSem.c -lpthread -fasm
 	chmod a+x asmProd
 	gcc -w -std=c99 -o asmPhilo AsmPhilo.c AsmMu.c -lpthread -fasm
 	chmod a+x asmPhilo
