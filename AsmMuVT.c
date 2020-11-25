@@ -48,7 +48,7 @@ int lockcheckVT(int* mutexAdress){
     return output;
 }
 
-int unlock(int* mutexAdress){
+int unlockVT(int* mutexAdress){
     int output;
     //printf("Mutex adress dans unlock: %p avec valeur %d\n", mutexAdress, *mutexAdress );
 
