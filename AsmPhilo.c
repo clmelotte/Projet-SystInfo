@@ -72,12 +72,12 @@ int main(int argc,char *argv[]){
     n_of_philoM=n_of_philo;
     if(n_of_philo==1){n_of_philoM=2;}
     pthread_t threadsPhi[n_of_philo];
-    int* tabI[n_of_philo];
+    int tabI[n_of_philo];
     int values[16];
 
     for(int i=0;i<n_of_philoM;i++){
-        values[i]=0;
-        mutexBa[i]=&values[i];
+        mutexBa[i]=(int *) malloc(sizeof(int));
+        create(mutexBa[i]);
     }
 
     for(int i=0;i<n_of_philo;i++){
@@ -97,5 +97,10 @@ int main(int argc,char *argv[]){
         err=pthread_join(threadsPhi[i], NULL);
         checkerr(err);
     }
+
+    for(int i=0;i<n_of_philoM;i++){
+        free(mutexBa[i]);
+    }
+
     return 0;
 }
