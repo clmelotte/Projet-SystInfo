@@ -1,0 +1,17 @@
+#!/bin/bash
+> timesAsmPhiloVT.csv
+for i in {1..5}
+do
+        echo -n "$i," >> timesAsmPhiloVT.csv
+done
+echo "" >> timesAsmPhiloVT.csv
+for n in {1..16}
+do
+        for i in {1..5}
+        do
+                /usr/bin/time -a -o "timesAsmPhiloVT.csv" -f '%e,' ./asmPhiloVT $n
+                truncate -s-1 timesAsmPhiloVT.csv
+        done
+        truncate -s-1 timesAsmPhiloVT.csv
+        echo "" >> timesAsmPhiloVT.csv
+done
