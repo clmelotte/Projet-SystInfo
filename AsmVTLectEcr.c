@@ -1,7 +1,11 @@
+//
+// Created by josep on 25/11/2020.
+//
+
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "AsmMu.h"
+#include "AsmMuVT.h"
 
 int nLectActif = 0;
 int nEcrActif = 0;
@@ -18,25 +22,25 @@ void *lecteur(void *arg){
 
     for (int i = 0; i < 2560; i++) {
         //printf("passage lecteur nbr %i\n", i);
-        lock(ecriture);
-        lock(mutLect);
+        lockVT(ecriture);
+        lockVT(mutLect);
         nLectActif++;
         if (nLectActif == 1) {
-            lock(dbLock);
+            lockVT(dbLock);
         }
-        unlock(mutLect);
-        unlock(ecriture);
+        unlockVT(mutLect);
+        unlockVT(ecriture);
 
         //lecture
         while (rand() > RAND_MAX / 10000) {}
 
-        lock(mutLect);
+        lockVT(mutLect);
         nLectActif--;
         if (nLectActif == 0) {
-            unlock(dbLock);
+            unlockVT(dbLock);
         }
         //compteLectures++;
-        unlock(mutLect);
+        unlockVT(mutLect);
     }
     //printf("lecteur terminé\n");
 }
@@ -44,26 +48,26 @@ void *lecteur(void *arg){
 void *ecrivain(void *arg){
     for (int i = 0; i < 640; i++) {
         //printf("passage ecrivain nbr %i\n", i);
-        lock(mutEcr);
+        lockVT(mutEcr);
         nEcrActif++;
         if (nEcrActif == 1) {
-            lock(ecriture);
+            lockVT(ecriture);
         }
-        unlock(mutEcr);
-        lock(dbLock);
+        unlockVT(mutEcr);
+        lockVT(dbLock);
 
         //ecriture
         while (rand() > RAND_MAX / 10000) {}
 
 
-        unlock(dbLock);
-        lock(mutEcr);
+        unlockVT(dbLock);
+        lockVT(mutEcr);
         nEcrActif--;
         if (nEcrActif == 0) {
-            unlock(ecriture);
+            unlockVT(ecriture);
         }
         //compteEcritures++;
-        unlock(mutEcr);
+        unlockVT(mutEcr);
     }
     //printf("ecrivain terminé\n");
 }
@@ -96,10 +100,10 @@ int main(int argc, char *argv[]){
     mutEcr=(int *) malloc(sizeof(int));
     dbLock=(int *) malloc(sizeof(int));
     ecriture=(int *) malloc(sizeof(int));
-    create(mutLect);
-    create(mutEcr);
-    create(dbLock);
-    create(ecriture);
+    createVT(mutLect);
+    createVT(mutEcr);
+    createVT(dbLock);
+    createVT(ecriture);
 
     pthread_t ecrivains[(nEcr)];
     pthread_t lecteurs[(nLect)];
