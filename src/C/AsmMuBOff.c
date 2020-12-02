@@ -34,8 +34,8 @@ int lockBOff(mutexBOff_t *mutBOff){
     int denFin = mutBOff->denFinal;
     while(lockcheckBOff(mutBOff)){
         while(rand() > RAND_MAX/denIni){}
-        denIni=denIni/2;
-        if(denIni<denFin){denIni=denFin;}
+        denIni=denIni*2;
+        if(denIni>denFin){denIni=denFin;}
     }
     return output;
 }
