@@ -16,8 +16,7 @@ void *SomTest(void* mutx){
     mutexBOff_t *mut = (mutexBOff_t *) mutx;
     for(int i =0; i<6400;i++ ){
         lockBOff(mut);
-        //while(rand() > RAND_MAX/10000){}
-        count++;
+        while(rand() > RAND_MAX/10000){}
         unlockBOff(mut);
     }
     return NULL;
