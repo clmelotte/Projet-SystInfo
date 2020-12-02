@@ -2,34 +2,23 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-dataPhiloDf= pd.read_csv('timesPhilo.csv')
-philo1=dataPhiloDf['1'].to_numpy()
-philo2=dataPhiloDf['2'].to_numpy()
-philo3=dataPhiloDf['3'].to_numpy()
-philo4=dataPhiloDf['4'].to_numpy()
-philo5=dataPhiloDf['5'].to_numpy()
-dataPhilo=np.array([philo1,philo2,philo3,philo4,philo5])
-philoMean=np.sum(dataPhilo,axis=0)/5
-philoStd=np.std(dataPhilo,axis=0)
-dataProdConsDf= pd.read_csv('timesProdCons.csv',sep=',')
-PC1=dataProdConsDf['1'].to_numpy()
-PC2=dataProdConsDf['2'].to_numpy()
-PC3=dataProdConsDf['3'].to_numpy()
-PC4=dataProdConsDf['4'].to_numpy()
-PC5=dataProdConsDf['5'].to_numpy()
-dataProdCons=np.array([PC1,PC2,PC3,PC4,PC5])
-PCMean=np.sum(dataProdCons,axis=0)/5
-PCStd=np.std(dataProdCons,axis=0)
-dataLectEcrDf= pd.read_csv('timesLectEcr.csv',sep=',')
-LE1=dataLectEcrDf['1'].to_numpy()
-LE2=dataLectEcrDf['2'].to_numpy()
-LE3=dataLectEcrDf['3'].to_numpy()
-LE4=dataLectEcrDf['4'].to_numpy()
-LE5=dataLectEcrDf['5'].to_numpy()
-dataLectEcr=np.array([LE1,LE2,LE3,LE4,LE5])
-LEMean=np.sum(dataLectEcr,axis=0)/5
-LEStd=np.std(dataLectEcr,axis=0)
-#print(philoMean,philoStd,PCMean,PCStd,LEMean,LEStd)
+dataPhilo= pd.read_csv('timesPhilo.csv')
+dataPhilo=dataPhilo.to_numpy()
+dataPhilo=np.delete(dataPhilo,5,1)
+philoMean=np.sum(dataPhilo,axis=1)/5
+philoStd=np.std(dataPhilo,axis=1)
+
+dataProdCons= pd.read_csv('timesProdCons.csv')
+dataProdCons=dataProdCons.to_numpy()
+dataProdCons=np.delete(dataProdCons,5,1)
+PCMean=np.sum(dataProdCons,axis=1)/5
+PCStd=np.std(dataProdCons,axis=1)
+
+dataLectEcr= pd.read_csv('timesLectEcr.csv')
+dataLectEcr=dataLectEcr.to_numpy()
+dataLectEcr=np.delete(dataLectEcr,5,1)
+LEMean=np.sum(dataLectEcr,axis=1)/5
+LEStd=np.std(dataLectEcr,axis=1)
 
 n=np.arange(1,17)
 nPC=np.arange(2,17)
