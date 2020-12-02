@@ -1,4 +1,4 @@
-compile : ./src/C/Philosophe.c ./src/C/ProducteurConsommateur.c ./src/C/LecteurEcrivain.c
+posixCompile : ./src/C/Philosophe.c ./src/C/ProducteurConsommateur.c ./src/C/LecteurEcrivain.c
 	@gcc -w -std=c99 -o philo ./src/C/Philosophe.c -lpthread 
 	@chmod a+x philo
 	@gcc -w -std=c99 -o prodCons ./src/C/ProducteurConsommateur.c -lpthread
@@ -18,14 +18,38 @@ clean :
 	@rm -fv testAsm
 	@rm -fv testAsmVT
 	@rm -fv testAsmBOff
-timeTests:
+timePosixTests:
 	@make compile
-	@bash ./timeTestPhilo
-	@bash ./timeTestProdCons
-	@bash ./timeTestLectEcr
+	@bash ./src/Bash/timeTestPhilo
+	@bash ./src/Bash/timeTestProdCons
+	@bash ./src/Bash/timeTestLectEcr
 	@make clean
+timeAsmTests:
+	@make asmCompile
+	@bash ./src/Bash/timeTestAsmPhilo
+	@bash ./src/Bash/timeTestAsmProd
+	@bash ./src/Bash/timeTestAsmLect
+	@make clean
+timeVTTests:
+	@make asmVTCompile
+	@bash ./src/Bash/timeTestAsmPhiloVT
+	@bash ./src/Bash/timeTestAsmProdVT
+	@bash ./src/Bash/timeTestAsmLectVT
+	@make clean
+timeTestAsmTest:
+	@make asmTestsCompile
+	@bash ./src/Bash/timeTestAsmTest
+	@bash ./src/Bash/timeTestAsmTestVT
+	@make clean
+timeTestAll:
+	@make timePosixTest
+	@make timeAsmTest
+	@make timeVTTest
+	@make timeTestAsmTest
 plotStats: ./src/Python/timeStats.py ./src/Python/compareTimeStats.py ./src/Python/AsmTestsTimeStats.py
 	@python ./src/Python/timeStats.py
+	@python ./src/Python/compareTimeStats.py
+	@python ./src/Python/AsmTestsTimeStats.py
 asmCompile: ./src/C/AsmProdCons.c ./src/C/AsmPhilo.c ./src/C/AsmLectEcr.c ./src/C/AsmMu.c ./src/C/AsmSem.c
 	@gcc -w -std=c99 -o asmProd ./src/C/AsmProdCons.c ./src/C/AsmMu.c ./src/C/AsmSem.c -lpthread -fasm
 	@chmod a+x asmProd
@@ -48,7 +72,7 @@ asmVTCompile: ./src/C/AsmVTProdCons.c ./src/C/AsmVTPhilo.c ./src/C/AsmVTLectEcr.
 	@gcc -w -std=c99 -o asmLectVT ./src/C/AsmVTLectEcr.c ./src/C/AsmMuVT.c -lpthread -fasm
 	@chmod a+x asmLectVT
 compileAll: 
-	@make compile
+	@make posixCompile
 	@make asmTestsCompile
 	@make asmCompile
 	@make asmVTCompile
