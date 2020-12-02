@@ -19,7 +19,7 @@ clean :
 	@rm -fv testAsmVT
 	@rm -fv testAsmBOff
 timePosixTests:
-	@make compile
+	@make posixCompile
 	@bash ./src/Bash/timeTestPhilo
 	@bash ./src/Bash/timeTestProdCons
 	@bash ./src/Bash/timeTestLectEcr
@@ -36,16 +36,16 @@ timeVTTests:
 	@bash ./src/Bash/timeTestAsmProdVT
 	@bash ./src/Bash/timeTestAsmLectVT
 	@make clean
-timeTestAsmTest:
+timeTestAsmTests:
 	@make asmTestsCompile
 	@bash ./src/Bash/timeTestAsmTest
 	@bash ./src/Bash/timeTestAsmTestVT
 	@make clean
 timeTestAll:
-	@make timePosixTest
-	@make timeAsmTest
-	@make timeVTTest
-	@make timeTestAsmTest
+	@make timePosixTests
+	@make timeAsmTests
+	@make timeVTTests
+	@make timeTestAsmTests
 plotStats: ./src/Python/timeStats.py ./src/Python/compareTimeStats.py ./src/Python/AsmTestsTimeStats.py
 	@python ./src/Python/timeStats.py
 	@python ./src/Python/compareTimeStats.py

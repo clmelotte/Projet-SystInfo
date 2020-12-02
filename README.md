@@ -17,7 +17,7 @@ Les différent mot-clés et les actions qui leurs sont liées sont:
 
 -'timePosixTests','timeAsmTests','timeVTTests' : permettent d'executer respectivement les version posix, test-and-set et test-test-and-set des scripts de testing temporels
 
--'timeTestAsmTest' : permet d'executer les tests temporels pour les codes de test pour nos ASMs
+-'timeTestAsmTests' : permet d'executer les tests temporels pour les codes de test pour nos ASMs
 
 -'timeTestAll' : Lance l'execution de tous les tests temporels
 
