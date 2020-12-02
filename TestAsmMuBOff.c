@@ -50,6 +50,5 @@ int main(int argc,char *argv[]){
     free(mut->mutexAdress);
     free(mut);
     return 0;
-
 }
 

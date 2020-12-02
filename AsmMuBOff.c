@@ -13,7 +13,6 @@
 
 int createBOff(mutexBOff_t *mutBOff,int* mutexAdress, int denIni, int denFin){
     int output;
-    if(mutexAdress==NULL || denIni<=0 || denFin < denIni){return 1;}
     mutBOff->mutexAdress=mutexAdress;
     mutBOff->denIni=denIni;
     mutBOff->denFinal=denFin;
