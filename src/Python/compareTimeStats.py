@@ -1,22 +1,25 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from os.path import dirname, abspath
+
+path=dirname(dirname(dirname(abspath(__file__))))
 
 #posix timings
 
-dataPhilo= pd.read_csv('timesPhilo.csv')
+dataPhilo= pd.read_csv(path+'/results/timesPhilo.csv')
 dataPhilo=dataPhilo.to_numpy()
 dataPhilo=np.delete(dataPhilo,5,1)
 philoMean=np.sum(dataPhilo,axis=1)/5
 philoStd=np.std(dataPhilo,axis=1)
 
-dataProdCons= pd.read_csv('timesProdCons.csv')
+dataProdCons= pd.read_csv(path+'/results/timesProdCons.csv')
 dataProdCons=dataProdCons.to_numpy()
 dataProdCons=np.delete(dataProdCons,5,1)
 PCMean=np.sum(dataProdCons,axis=1)/5
 PCStd=np.std(dataProdCons,axis=1)
 
-dataLectEcr= pd.read_csv('timesLectEcr.csv')
+dataLectEcr= pd.read_csv(path+'/results/timesLectEcr.csv')
 dataLectEcr=dataLectEcr.to_numpy()
 dataLectEcr=np.delete(dataLectEcr,5,1)
 LEMean=np.sum(dataLectEcr,axis=1)/5
@@ -24,19 +27,19 @@ LEStd=np.std(dataLectEcr,axis=1)
 
 #test and set timings
 
-dataPhiloA= pd.read_csv('timesAsmPhilo.csv')
+dataPhiloA= pd.read_csv(path+'/results/timesAsmPhilo.csv')
 dataPhiloA=dataPhiloA.to_numpy()
 dataPhiloA=np.delete(dataPhiloA,5,1)
 philoAMean=np.sum(dataPhiloA,axis=1)/5
 philoAStd=np.std(dataPhiloA,axis=1)
 
-dataProdA= pd.read_csv('timesAsmProd.csv')
+dataProdA= pd.read_csv(path+'/results/timesAsmProd.csv')
 dataProdA=dataProdA.to_numpy()
 dataProdA=np.delete(dataProdA,5,1)
 prodAMean=np.sum(dataProdA,axis=1)/5
 prodAStd=np.std(dataProdA,axis=1)
 
-dataLectA= pd.read_csv('timesAsmLect.csv')
+dataLectA= pd.read_csv(path+'/results/timesAsmLect.csv')
 dataLectA=dataLectA.to_numpy()
 dataLectA=np.delete(dataLectA,5,1)
 lectAMean=np.sum(dataLectA,axis=1)/5
@@ -44,19 +47,19 @@ lectAStd=np.std(dataLectA,axis=1)
 
 #test and test and set timings
 
-dataPhiloAVT= pd.read_csv('timesAsmPhiloVT.csv')
+dataPhiloAVT= pd.read_csv(path+'/results/timesAsmPhiloVT.csv')
 dataPhiloAVT=dataPhiloAVT.to_numpy()
 dataPhiloAVT=np.delete(dataPhiloAVT,5,1)
 philoAVTMean=np.sum(dataPhiloAVT,axis=1)/5
 philoAVTStd=np.std(dataPhiloAVT,axis=1)
 
-dataProdAVT= pd.read_csv('timesAsmProdVT.csv')
+dataProdAVT= pd.read_csv(path+'/results/timesAsmProdVT.csv')
 dataProdAVT=dataProdAVT.to_numpy()
 dataProdAVT=np.delete(dataProdAVT,5,1)
 prodAVTMean=np.sum(dataProdAVT,axis=1)/5
 prodAVTStd=np.std(dataProdAVT,axis=1)
 
-dataLectAVT= pd.read_csv('timesAsmLectVT.csv')
+dataLectAVT= pd.read_csv(path+'/results/timesAsmLectVT.csv')
 dataLectAVT=dataLectAVT.to_numpy()
 dataLectAVT=np.delete(dataLectAVT,5,1)
 lectAVTMean=np.sum(dataLectAVT,axis=1)/5

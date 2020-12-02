@@ -1,30 +1,30 @@
 #!/bin/bash
-> timesAsmProdVT.csv
+> ../../results/timesAsmProdVT.csv
 for i in {1..5}
 do
-        echo -n "$i," >> timesAsmProdVT.csv
+        echo -n "$i," >> ../../results/timesAsmProdVT.csv
 done
-echo "" >> timesAsmProdVT.csv
+echo "" >> ../../results/timesAsmProdVT.csv
 for n in {1..7}
 do
         for i in {1..5}
         do
-                /usr/bin/time -a -o "timesAsmProdVT.csv" -f '%e,' ./asmProdVT $n $n
-                truncate -s-1 timesAsmProdVT.csv
+                /usr/bin/time -a -o "../../results/timesAsmProdVT.csv" -f '%e,' ../../asmProdVT $n $n
+                truncate -s-1 ../../results/timesAsmProdVT.csv
         done
-        truncate -s-1 timesAsmProdVT.csv
-        echo "" >> timesAsmProdVT.csv
+        truncate -s-1 ../../results/timesAsmProdVT.csv
+        echo "" >> ../../results/timesAsmProdVT.csv
         for i in {1..5}
         do
                 let n1=n+1
-                /usr/bin/time -a -o "timesAsmProdVT.csv" -f '%e,' ./asmProdVT $n $n1
-                truncate -s-1 timesAsmProdVT.csv
+                /usr/bin/time -a -o "../../results/timesAsmProdVT.csv" -f '%e,' ../../asmProdVT $n $n1
+                truncate -s-1 ../../results/timesAsmProdVT.csv
         done
-        truncate -s-1 timesAsmProdVT.csv
-        echo "" >> timesAsmProdVT.csv
+        truncate -s-1 ../../results/timesAsmProdVT.csv
+        echo "" >> ../../results/timesAsmProdVT.csv
 done
 for i in {1..5}
 do
-        /usr/bin/time -a -o "timesAsmProdVT.csv" -f '%e,' ./asmProdVT 8 8
-        truncate -s-1 timesAsmProdVT.csv
+        /usr/bin/time -a -o "../../results/timesAsmProdVT.csv" -f '%e,' ../../asmProdVT 8 8
+        truncate -s-1 ../../results/timesAsmProdVT.csv
 done
