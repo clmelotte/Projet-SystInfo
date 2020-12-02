@@ -1,14 +1,17 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from os.path import dirname, abspath
 
-dataTS= pd.read_csv('timesAsmTest.csv')
+path=dirname(dirname(dirname(abspath(__file__))))
+
+dataTS= pd.read_csv(path+'/results/timesAsmTest.csv')
 dataTS=dataTS.to_numpy()
 dataTS=np.delete(dataTS,5,1)
 TSMean=np.sum(dataTS,axis=1)/5
 TSStd=np.std(dataTS,axis=1)
 
-dataTTS= pd.read_csv('timesAsmTestVT.csv')
+dataTTS= pd.read_csv(path+'/results/timesAsmTestVT.csv')
 dataTTS=dataTTS.to_numpy()
 dataTTS=np.delete(dataTTS,5,1)
 TTSMean=np.sum(dataTTS,axis=1)/5

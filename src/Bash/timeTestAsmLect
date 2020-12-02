@@ -1,0 +1,25 @@
+#!/bin/bash
+> ../../results/timesAsmLect.csv
+for i in {1..5}
+do
+        echo -n "$i," >> ../../results/timesAsmLect.csv
+done
+echo "" >> ../../results/timesAsmLect.csv
+for n in {1..8}
+do
+	for i in {1..5}
+	do
+		let n1=n-1
+		/usr/bin/time -a -o "../../results/timesAsmLect.csv" -f '%e,' ../../asmLect $n1 $n
+		truncate -s-1 ../../results/timesAsmLect.csv 
+	done
+	truncate -s-1 ../../results/timesAsmLect.csv
+	echo "" >> ../../results/timesAsmLect.csv
+	for i in {1..5}
+        do
+                /usr/bin/time -a -o "../../results/timesAsmLect.csv" -f '%e,' ../../asmLect $n $n
+                truncate -s-1 ../../results/timesAsmLect.csv
+        done
+        truncate -s-1 ../../results/timesAsmLect.csv
+        echo "" >> ../../results/timesAsmLect.csv
+done

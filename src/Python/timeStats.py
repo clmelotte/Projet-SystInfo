@@ -1,20 +1,23 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from os.path import dirname, abspath
 
-dataPhilo= pd.read_csv('timesPhilo.csv')
+path=dirname(dirname(dirname(abspath(__file__))))
+
+dataPhilo= pd.read_csv(path+'/results/timesPhilo.csv')
 dataPhilo=dataPhilo.to_numpy()
 dataPhilo=np.delete(dataPhilo,5,1)
 philoMean=np.sum(dataPhilo,axis=1)/5
 philoStd=np.std(dataPhilo,axis=1)
 
-dataProdCons= pd.read_csv('timesProdCons.csv')
+dataProdCons= pd.read_csv(path+'/results/timesProdCons.csv')
 dataProdCons=dataProdCons.to_numpy()
 dataProdCons=np.delete(dataProdCons,5,1)
 PCMean=np.sum(dataProdCons,axis=1)/5
 PCStd=np.std(dataProdCons,axis=1)
 
-dataLectEcr= pd.read_csv('timesLectEcr.csv')
+dataLectEcr= pd.read_csv(path+'/results/timesLectEcr.csv')
 dataLectEcr=dataLectEcr.to_numpy()
 dataLectEcr=np.delete(dataLectEcr,5,1)
 LEMean=np.sum(dataLectEcr,axis=1)/5
