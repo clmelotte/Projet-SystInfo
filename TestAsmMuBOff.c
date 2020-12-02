@@ -9,7 +9,6 @@
 #include <pthread.h>
 #include "AsmMuBOff.h"
 
-int count ;
 
 void *SomTest(void* mutx){
 
@@ -28,7 +27,6 @@ int main(int argc,char *argv[]){
         exit(-1);
     }
 
-    count =0;
 
 
     int n_of_th = atoi(argv[1]);
@@ -51,8 +49,7 @@ int main(int argc,char *argv[]){
     }
     free(mut->mutexAdress);
     free(mut);
-    if(count == 6400*n_of_th){return 0;}
-    else {return -1;}
+    return 0;
 
 }
 
