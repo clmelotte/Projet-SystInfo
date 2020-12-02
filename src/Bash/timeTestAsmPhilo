@@ -1,17 +1,17 @@
 #!/bin/bash
-> ../../results/timesAsmPhilo.csv
+> ./results/timesAsmPhilo.csv
 for i in {1..5}
 do
-        echo -n "$i," >> ../../results/timesAsmPhilo.csv
+        echo -n "$i," >> ./results/timesAsmPhilo.csv
 done
-echo "" >> ../../results/timesAsmPhilo.csv
+echo "" >> ./results/timesAsmPhilo.csv
 for n in {1..16}
 do
 	for i in {1..5}
 	do
-		/usr/bin/time -a -o "../../results/timesAsmPhilo.csv" -f '%e,' ../../asmPhilo $n
-		truncate -s-1 ../../results/timesAsmPhilo.csv
+		/usr/bin/time -a -o "./results/timesAsmPhilo.csv" -f '%e,' ./asmPhilo $n
+		truncate -s-1 ./results/timesAsmPhilo.csv
 	done
-	truncate -s-1 ../../results/timesAsmPhilo.csv
-	echo "" >> ../../results/timesAsmPhilo.csv
+	truncate -s-1 ./results/timesAsmPhilo.csv
+	echo "" >> ./results/timesAsmPhilo.csv
 done
